@@ -3,16 +3,8 @@
 
 
 import libs.common as common
-import sys
-import time
-import pandas as pd
 import numpy as np
-from sqlalchemy.types import NVARCHAR
-from sqlalchemy import inspect
-import datetime
 import akshare as ak
-
-import MySQLdb
 
 # 600开头的股票是上证A股，属于大盘股
 # 600开头的股票是上证A股，属于大盘股，其中6006开头的股票是最早上市的股票，

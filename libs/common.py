@@ -8,10 +8,11 @@ import datetime
 import time
 import sys
 import os
-import MySQLdb
+import pymysql
 from sqlalchemy import create_engine
 from sqlalchemy.types import NVARCHAR
 from sqlalchemy import inspect
+from urllib import parse
 import pandas as pd
 import traceback
 import akshare as ak
@@ -23,7 +24,7 @@ MYSQL_PWD = os.environ.get('MYSQL_PWD') if (os.environ.get('MYSQL_PWD') != None)
 MYSQL_DB = os.environ.get('MYSQL_DB') if (os.environ.get('MYSQL_DB') != None) else "stock_data"
 
 print("MYSQL_HOST :", MYSQL_HOST, ",MYSQL_USER :", MYSQL_USER, ",MYSQL_DB :", MYSQL_DB)
-MYSQL_CONN_URL = "mysql+mysqldb://" + MYSQL_USER + ":" + MYSQL_PWD + "@" + MYSQL_HOST + ":3306/" + MYSQL_DB + "?charset=utf8mb4"
+MYSQL_CONN_URL = 'mysql+pymysql://%s:%s@%s:6603/%s?charset=utf8mb4' % (MYSQL_USER, parse.quote_plus(MYSQL_PWD), MYSQL_HOST, MYSQL_DB)
 print("MYSQL_CONN_URL :", MYSQL_CONN_URL)
 
 __version__ = "2.0.0"
@@ -36,7 +37,7 @@ def engine():
     return engine
 
 def engine_to_db(to_db):
-    MYSQL_CONN_URL_NEW = "mysql+mysqldb://" + MYSQL_USER + ":" + MYSQL_PWD + "@" + MYSQL_HOST + ":3306/" + to_db + "?charset=utf8mb4"
+    MYSQL_CONN_URL_NEW = 'mysql+pymysql://%s:%s@%s:6603/%s?charset=utf8mb4' % (MYSQL_USER, parse.quote_plus(MYSQL_PWD), MYSQL_HOST, to_db)
     engine = create_engine(
         MYSQL_CONN_URL_NEW,
         encoding='utf8', convert_unicode=True)
